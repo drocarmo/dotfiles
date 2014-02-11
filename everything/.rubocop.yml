@@ -1,0 +1,21 @@
+StringLiterals:
+  EnforcedStyle: double_quotes
+
+LineLength:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+ClassLength:
+  Enabled: false
+
+SpaceAroundEqualsInParameterDefault:
+  Enabled: false
+
+CyclomaticComplexity:
+  Enabled: false
+

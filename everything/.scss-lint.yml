@@ -1,0 +1,10 @@
+linters:
+  SelectorDepth:
+    enabled: false
+
+  SortedProperties:
+    enabled: false
+
+  StringQuotes:
+    enabled: false
+
