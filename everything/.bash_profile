@@ -8,15 +8,11 @@ export PATH=/usr/local/share/npm/bin:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 eval "$(rbenv init -)"
 
-# User prompt styles
-export PS1='\e[1;34m\h: \e[1;31m\w$ \e[00m'
-export PS1='\[\033[0;36m\]\u\[\033[00;37m\]:\[\033[0;36m\]\h \[\033[0;37m\]{ \[\033[1;31m\]\w \[\033[0;37m\]}\[\033[01;32m\]$ \[\033[00m\]'
-
 # Misc Aliases
-alias ll='ls -laGhT'
 alias reload='source ~/.bash_profile'
 alias root='sudo -s'
 alias v='vim'
+alias atom='atom .'
 
 # App Aliases
 alias docs='open /Applications/Dash.app'
@@ -33,7 +29,7 @@ alias home='cd ~'
 alias ..='cd ../'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias ll='ls -laGht'
+alias ll='ls -lah'
 
 # Foreman Aliases
 alias foreman='foreman start -f'
@@ -58,6 +54,9 @@ alias gpr='git pull --rebase'
 alias gr='git rm'
 alias gs='git status'
 alias gsh='git show'
+alias stash='git stash'
+alias stashp='git stash pop'
+alias stashl='git stash list'
 
 # Heroku Aliases
 alias h='heroku'
@@ -83,11 +82,19 @@ alias binstall='bundle install --binstubs .bundle/bin'
 alias gemstrap='gem install bundler scss-lint rubocop haml'
 
 # Bash Completions
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if [ -f /usr/local/etc/bash_completion ]; then
+  . /usr/local/etc/bash_completion
 fi
 
 if [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
   source /usr/local/etc/bash_completion.d/git-completion.bash
 fi
 
+# Bash Prompt
+if [ -f ~/.bash_prompt ]; then
+  source ~/.bash_prompt
+fi
+
+# Terminal
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced

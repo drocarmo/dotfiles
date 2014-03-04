@@ -1,55 +1,57 @@
-# Styles copied from https://github.com/gf3/dotfiles
+RED="\[\033[1;91m\]"
+YELLOW="\[\033[1;93m\]"
+GREEN="\[\033[1;92m\]"
+BLUE="\[\033[1;94m\]"
+WHITE="\[\033[1;97m\]"
+COLOR_RESET="\[\e[0m\]"
 
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-  export TERM=gnome-256color
-elif infocmp xterm-256color >/dev/null 2>&1; then
-  export TERM=xterm-256color
-fi
+function is_git_repository {
+  git branch > /dev/null 2>&1
+}
 
-if tput setaf 1 &> /dev/null; then
-  tput sgr0
-  if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
-    # Changed these colors to fit Solarized theme
-    MAGENTA=$(tput setaf 125)
-    ORANGE=$(tput setaf 166)
-    GREEN=$(tput setaf 64)
-    PURPLE=$(tput setaf 61)
-    WHITE=$(tput setaf 244)
+function set_git_prompt {
+  git_status="$(git status 2> /dev/null)"
+  remote_pattern="Your branch is (.*) of"
+  diverge_pattern="Your branch and (.*) have diverged"
+  branch_pattern="^On branch ([^${IFS}]*)"
+
+  if [[ ${git_status} =~ "working directory clean" ]]; then
+    GIT_STATE_COLOR="${WHITE}"
+  elif [[ ${git_status} =~ "Changes to be committed" ]]; then
+    GIT_STATE_COLOR="${YELLOW}"
   else
-    MAGENTA=$(tput setaf 5)
-    ORANGE=$(tput setaf 4)
-    GREEN=$(tput setaf 2)
-    PURPLE=$(tput setaf 1)
-    WHITE=$(tput setaf 7)
+    GIT_STATE_COLOR="${RED}"
   fi
-  BOLD=$(tput bold)
-  RESET=$(tput sgr0)
-else
-  MAGENTA="\033[1;31m"
-  ORANGE="\033[1;33m"
-  GREEN="\033[1;32m"
-  PURPLE="\033[1;35m"
-  WHITE="\033[1;37m"
-  BOLD=""
-  RESET="\033[m"
-fi
 
-export MAGENTA
-export ORANGE
-export GREEN
-export PURPLE
-export WHITE
-export BOLD
-export RESET
+  if [[ ${git_status} =~ ${remote_pattern} ]]; then
+    if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+      GIT_REMOTE_STATE=" ↑"
+    else
+      GIT_REMOTE_STATE=" ↓"
+    fi
+  else
+    GIT_REMOTE_STATE=""
+  fi
 
-function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
+  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
+    GIT_REMOTE_STATE=" ↕"
+  fi
+
+  if [[ ${git_status} =~ ${branch_pattern} ]]; then
+    GIT_BRANCH_NAME=${BASH_REMATCH[1]}
+  fi
+
+  GIT_PROMPT=" ${GIT_STATE_COLOR}(${GIT_BRANCH_NAME})${GIT_REMOTE_STATE}${COLOR_RESET}"
 }
 
-function parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+function set_bash_prompt {
+  if is_git_repository ; then
+    set_git_prompt
+  else
+    GIT_PROMPT=""
+  fi
+
+  PS1="${WHITE}\@${COLOR_RESET} \w${GIT_PROMPT} $ "
 }
 
-export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
-export PS2="\[$ORANGE\]→ \[$RESET\]"
-
+PROMPT_COMMAND=set_bash_prompt
