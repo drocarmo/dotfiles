@@ -15,12 +15,14 @@ alias v='vim'
 alias atom='atom .'
 
 # App Aliases
+alias chrome='open /Applications/GoogleChrome.app'
 alias docs='open /Applications/Dash.app'
 alias duo='open /Applications/Duo.app'
 alias framer='open /Applications/Framer.app'
 alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
-alias onepw='open /Applications/1Password.app'
 alias music='open /Applications/Rdio.app'
+alias onepw='open /Applications/1Password.app'
+alias safari='open /Applications/Safari.app'
 alias write='open /Applications/WriterPro.app'
 alias xcode='open /Applications/Xcode.app'
 
@@ -38,8 +40,9 @@ alias fml='bundle exec foreman start -f Procfile.local'
 
 # Git Aliases
 alias ga='git add -A'
-alias gch='git checkout'
 alias gc='git commit -a -m'
+alias gch='git checkout'
+alias gchnew='git checkout -b'
 alias gd='git diff'
 alias gdt='git difftool'
 alias gdc='git difftool --cached'

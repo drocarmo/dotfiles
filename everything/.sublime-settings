@@ -1,0 +1,37 @@
+{
+  // Base settings
+
+  "color_scheme": "Packages/User/base16-eighties.dark (SL).tmTheme",
+  "theme": "Spacegray.sublime-theme",
+
+  // Typography settings
+
+  "font_face": "Inconsolata",
+  "font_size": 18,
+  "line_padding_bottom": "1",
+  "line_padding_top": 1,
+
+  // Ignored shit
+
+  "folder_exclude_patterns":
+  [
+    ".sass-cache",
+    "tmp",
+    ".git"
+  ],
+  "ignored_packages":
+  [
+    "Vintage"
+  ],
+
+  // Misc Productivity settings
+
+  "save_on_focus_lost": true,
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+  "trim_trailing_white_space_on_save": true,
+  "indent_guide_options": ["draw_normal", "draw_active"],
+  "highlight_line": true,
+  "highlight_modified_tabs": true,
+  "bold_folder_labels": true
+}

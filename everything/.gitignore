@@ -10,10 +10,12 @@ Thumbs.db
 *~
 *.diff
 *.err
+*.git
 *.log
 *.orig
 *.pyc
 *.rej
 *.sass-cache
 *.sw?
+*tmp
 *.vi
